@@ -6,8 +6,8 @@ def get_range_for_difficulty(difficulty: str):
         return 1, 20
     if difficulty == "Normal":
         return 1, 100
-    if difficulty == "Hard":
-        return 1, 50
+    if difficulty == "Hard":  #FIX: range was 1-50 (smaller than Normal's 1-100); changed to 1-200 so Hard is actually harder — Claude Code assisted
+        return 1, 200
     return 1, 100
 
 
@@ -34,10 +34,10 @@ def check_guess(guess, secret):
         return "Win", "🎉 Correct!"
 
     try:
-        if guess > secret:
-            return "Too High", "📈 Go HIGHER!"
+        if guess > secret:  #FIX: hint messages were swapped; guess > secret means too high so player must go lower — Claude Code assisted
+            return "Too High", "📉 Go LOWER!"
         else:
-            return "Too Low", "📉 Go LOWER!"
+            return "Too Low", "📈 Go HIGHER!"
     except TypeError:
         g = str(guess)
         if g == secret:
@@ -155,10 +155,7 @@ if submit:
     else:
         st.session_state.history.append(guess_int)
 
-        if st.session_state.attempts % 2 == 0:
-            secret = str(st.session_state.secret)
-        else:
-            secret = st.session_state.secret
+        secret = st.session_state.secret  #FIX: even attempts cast secret to str causing broken comparisons; always use int — Claude Code assisted
 
         outcome, message = check_guess(guess_int, secret)
 

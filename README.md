@@ -26,12 +26,22 @@ It wrote the code, ran away, and now the game is unplayable.
 ## 📝 Document Your Experience
 
 - [ ] Describe the game's purpose.
+This app is a Streamlit number guessing game where the player tries to guess a hidden “secret” number within a limited number of attempts. After each guess, the game gives a hint telling the player to go higher or lower. The goal is to guess correctly before you run out of attempts.
 - [ ] Detail which bugs you found.
+The hint messages were incorrect (it would tell me to go lower even when the secret number was higher than my guess).
+The game logic behaved inconsistently because the secret number was sometimes treated as a string instead of an integer, which broke comparisons.
+“Hard” difficulty was not actually harder because its range was smaller than “Normal.”
+After winning, the game would stop accepting new guesses unless a new game was started.
 - [ ] Explain what fixes you applied.
+Fixed the hint logic in check_guess so guess > secret returns Too High and tells the player to go LOWER, and guess < secret returns Too Low and tells the player to go HIGHER.
+Removed the bug that converted the secret number to a string during certain attempts, so comparisons always work as numeric comparisons.
+Updated Hard difficulty to use a larger range so it is actually harder than Normal.
+Refactored core logic into logic_utils.py and added pytest regression tests to confirm the fixes and prevent the bugs from coming back.
 
 ## 📸 Demo
 
 - [ ] [Insert a screenshot of your fixed, winning game here]
+![alt text](image.png)
 
 ## 🚀 Stretch Features
 
